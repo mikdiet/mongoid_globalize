@@ -50,7 +50,6 @@ module Mongoid::Globalize
       end
     end
 
-  protected
     def translated_attr_accessor(name)
       define_method(:"#{name}=") do |value|
         write_attribute(name, value)

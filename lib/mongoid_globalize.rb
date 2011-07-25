@@ -3,6 +3,7 @@ require 'mongoid_globalize/act_macro'
 require 'mongoid_globalize/attributes'
 require 'mongoid_globalize/class_methods'
 require 'mongoid_globalize/document_translation'
+require 'mongoid_globalize/fields_builder'
 require 'mongoid_globalize/instance_methods'
 
 module Mongoid::Globalize

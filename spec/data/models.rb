@@ -2,10 +2,12 @@ class Post
   include Mongoid::Document
   include Mongoid::Globalize
   belongs_to :blog
-  translates :title, :content
-
-  translates :published => Boolean
-  translates :published_at => DateTime
+  translates do
+    field :title
+    field :content
+    field :published, type: Boolean
+    field :published_at, type: DateTime
+  end
   validates_presence_of :title
   scope :with_some_title, :conditions => { :title => 'some_title' }
 end
@@ -15,8 +17,8 @@ class PostTranslation
   field :locale
   field :title
   field :content
-  field :published => Boolean
-  field :published_at => DateTime
+  field :published, type: Boolean
+  field :published_at, type: DateTime
   embedded_in :post
 
   def existing_method
@@ -36,13 +38,16 @@ end
 class Validatee
   include Mongoid::Document
   include Mongoid::Globalize
-  translates :string
+  translates{ field :string }
 end
 
 class Parent
   include Mongoid::Document
   include Mongoid::Globalize
-  translates :content, :type
+  translates do
+    field :content
+    field :type
+  end
 end
 
 class Child < Parent
@@ -57,14 +62,17 @@ end
 
 class TranslatedComment < Comment
   include Mongoid::Globalize
-  translates :content, :title
+  translates do
+    field :content
+    field :title
+  end
 end
 
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Globalize
-  translates :name
+  translates{ field :name }
   field :email
   validates_presence_of :name, :email
 end
@@ -72,6 +80,8 @@ end
 class Task
   include Mongoid::Document
   include Mongoid::Globalize
-  fallbacks_for_empty_translations!
-  translates :name
+  translates do
+    fallbacks_for_empty_translations!
+    field :name
+  end
 end

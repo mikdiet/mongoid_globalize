@@ -32,7 +32,7 @@ describe "Translation class" do
           class Baz
             include Mongoid::Document
             include Mongoid::Globalize
-            translates :bumm
+            translates{ field :bumm }
           end
         end
       end
