@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     "lib/mongoid_globalize/class_methods.rb",
     "lib/mongoid_globalize/document_translation.rb",
     "lib/mongoid_globalize/instance_methods.rb",
+    "mongoid_globalize.gemspec",
     "spec/data/models.rb",
     "spec/mongoid_globalize/attributes_spec.rb",
     "spec/mongoid_globalize/clone_spec.rb",
