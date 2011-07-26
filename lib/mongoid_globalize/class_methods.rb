@@ -1,29 +1,34 @@
 module Mongoid::Globalize
   module ClassMethods
-    delegate :translated_locales, :to => :translation_class
+    def translated_locales
+      all.distinct("translations.locale").sort.map &:to_sym
+    end
 
-    # TODO: At first deal with +translated_locales+
-    #
-    #def with_locales(*locales)
-    #  scoped.merge(translation_class.with_locales(*locales))
-    #end
-    #
-    #def with_translations(*locales)
-    #  locales = translated_locales if locales.empty?
-    #  includes(:translations).with_locales(locales).with_required_attributes
-    #end
-    #
-    #def with_required_attributes
-    #  required_translated_attributes.inject(scoped) do |scope, name|
-    #    scope.where("#{translated_column_name(name)} IS NOT NULL")
-    #  end
-    #end
-    #
+    def with_locales(*locales)
+      where(translated_field_name(:locale).in => locales.flatten)
+    end
+    
+    def with_translations(*locales)
+      locales = translated_locales if locales.empty?
+      with_locales(locales).with_required_attributes
+    end
+    
+    def with_required_attributes
+      required_translated_attributes.inject(self) do |scope, name|
+        scope.where(translated_field_name(name).exists => true)
+      end
+    end
+
+    def translated_field_name(name)
+      "translations.#{name}".to_sym
+    end
+
+    # TODO:
     #def with_translated_attribute(name, value, locales = nil)
     #  locales ||= Globalize.fallbacks
     #  with_translations.where(
-    #    translated_column_name(name)    => value,
-    #    translated_column_name(:locale) => Array(locales).map(&:to_s)
+    #    translated_field_name(name)    => value,
+    #    translated_field_name(:locale) => Array(locales).map(&:to_s)
     #  )
     #end
 
@@ -46,6 +51,7 @@ module Mongoid::Globalize
           klass = self.const_set(:Translation, Class.new(Mongoid::Globalize::DocumentTranslation))
         end
         klass.embedded_in name.underscore.gsub('/', '_')
+        klass.translated_klass = self
         klass
       end
     end

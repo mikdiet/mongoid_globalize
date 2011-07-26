@@ -58,10 +58,4 @@ module Mongoid::Globalize
       Thread.current[:globalize_locale] = locale.to_sym rescue nil
     end
   end
-  #
-  #module HasManyExtensions
-  #  def find_or_initialize_by_locale(locale)
-  #    with_locale(locale.to_s).first || build(:locale => locale.to_s)
-  #  end
-  #end
 end

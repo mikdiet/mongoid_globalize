@@ -119,7 +119,6 @@ describe Mongoid::Globalize do
 
   describe "#translated_locales" do
     it "returns locales that have translations" do
-      pending "TODO"
       first = Post.create!(:title => 'title', :locale => :en)
       first.update_attributes(:title => 'Title', :locale => :de)
       second = Post.create!(:title => 'title', :locale => :en)
@@ -144,12 +143,21 @@ describe Mongoid::Globalize do
   end
 
   describe "#with_translations" do
-    it "eager loads translations" do
-      pending "TODO"
+    it "loads only documents with translations" do
       Post.create(:title => 'title 1')
-      Post.create(:title => 'title 2')  
-      Post.with_translations.first.translations.should be_loaded
-      Post.with_translations.map(&:title).should == ['title 1', 'title 2']
+      Post.create(:title => 'title 2')
+      Post.with_translations.map(&:title).sort.should == ['title 1', 'title 2']
+      Post.with_translations(:de).should == []
+    end
+
+    it "doesn't load document with present locale, but absent required attributes" do
+      post = Post.create(:title => 'title 1')
+      post.set_translations(
+        :en => { :title => 'updated title' },
+        :ru => { :content => 'без заголовка' }
+      )
+      Post.with_translations(:en).first.should == post
+      Post.with_translations(:de).should == []
     end
   end
 

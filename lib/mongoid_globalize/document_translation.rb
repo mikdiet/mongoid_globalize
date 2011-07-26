@@ -3,6 +3,8 @@ module Mongoid::Globalize
     include Mongoid::Document
     field :locale
     class << self
+      attr_accessor :translated_klass
+
       def with_locales(*locales)
         locales = locales.flatten.map(&:to_s)
         where(:locale.in => locales)
@@ -10,8 +12,7 @@ module Mongoid::Globalize
       alias with_locale with_locales
 
       def translated_locales
-        # TODO
-        []
+        all.distinct("locale").sort.map &:to_sym
       end
 
       def find_or_initialize_by_locale(locale)
