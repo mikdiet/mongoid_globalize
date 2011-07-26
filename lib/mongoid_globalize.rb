@@ -12,11 +12,8 @@ module Mongoid::Globalize
     class_attribute :translated_attribute_names, :fallbacks_for_empty_translations
     self.translated_attribute_names = []
     embeds_many :translations, :class_name  => translation_class.name
-                #:extend => HasManyExtensions
-    before_create :unmerge_translations!
-    after_create :create_translations!
-    before_update :update_translations!
-    after_create :clear_translations!
+    before_save :prepare_translations!
+    after_save :clear_translations!
 
     extend Mongoid::Globalize::ActMacro
   end

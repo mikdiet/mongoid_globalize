@@ -19,19 +19,6 @@ module Mongoid::Globalize
       with_given_locale(attributes) { super }
     end
 
-    # All of this replaced by #process.. may be :)
-    #def write_attributes(attributes, *args)
-    #  with_given_locale(attributes) { super }
-    #end
-
-    #def update_attributes!(attributes, *args)
-    #  with_given_locale(attributes) { super }
-    #end
-    #
-    #def update_attributes(attributes, *args)
-    #  with_given_locale(attributes) { super }
-    #end
-
     def write_attribute(name, value, options = {})
       if translated?(name)
         options = {:locale => nil}.merge(options)
@@ -138,23 +125,13 @@ module Mongoid::Globalize
       locales
     end
 
-    def unmerge_translations!
+    def prepare_translations!
       @stop_merging_translated_attributes = true
       translated_attribute_names.each do |name|
         @attributes.delete name.to_s
         @changed_attributes.delete name.to_s
       end
-    end
-
-    def create_translations!
-      globalize.save_translations!
-      clear_translations!
-    end
-
-    def update_translations!
-      unmerge_translations!
       globalize.prepare_translations!
-      globalize.reset
     end
 
     def clear_translations!

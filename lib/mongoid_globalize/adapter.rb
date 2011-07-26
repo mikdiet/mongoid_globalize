@@ -29,22 +29,12 @@ module Mongoid::Globalize
       stash.write(locale, name, value)
     end
 
-    def save_translations!
-      stash.each do |locale, attrs|
-        translation = record.translations.find_or_initialize_by_locale(locale.to_s)
-        attrs.each{ |name, value| translation[name] = value }
-        translation.save!
-      end
-      # TODO: it's actual for mongoid?
-      #record.translations.reset
-      reset
-    end
-
     def prepare_translations!
       stash.each do |locale, attrs|
         translation = record.translations.find_or_initialize_by_locale(locale.to_s)
         attrs.each{ |name, value| translation[name] = value }
       end
+      reset
     end
 
     def reset
