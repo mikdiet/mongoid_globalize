@@ -4,23 +4,15 @@ module Mongoid::Globalize
       all.distinct("translations.locale").sort.map &:to_sym
     end
 
-    def with_locales(*locales)
-      where(translated_field_name(:locale).in => locales.flatten)
-    end
-    
     def with_translations(*locales)
       locales = translated_locales if locales.empty?
-      with_locales(locales).with_required_attributes
-    end
-    
-    def with_required_attributes
-      required_translated_attributes.inject(self) do |scope, name|
-        scope.where(translated_field_name(name).exists => true)
-      end
+      where :translations.matches => {:locale => {"$in" => locales.flatten}}.merge(required_fields_criteria)
     end
 
-    def translated_field_name(name)
-      "translations.#{name}".to_sym
+    def required_fields_criteria
+      required_translated_attributes.inject({}) do |criteria, name|
+        criteria.merge name => {"$ne" => nil}
+      end
     end
 
     # TODO:
@@ -30,6 +22,10 @@ module Mongoid::Globalize
     #    translated_field_name(name)    => value,
     #    translated_field_name(:locale) => Array(locales).map(&:to_s)
     #  )
+    #end
+    #
+    #def translated_field_name(name)
+    #  "translations.#{name}".to_sym
     #end
 
     def translated?(name)

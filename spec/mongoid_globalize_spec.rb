@@ -157,7 +157,7 @@ describe Mongoid::Globalize do
         :ru => { :content => 'без заголовка' }
       )
       Post.with_translations(:en).first.should == post
-      Post.with_translations(:de).should == []
+      Post.with_translations(:ru).first.should == nil
     end
   end
 
