@@ -1,0 +1,122 @@
+h1. Mongoid::Globalize
+
+Mongoid::Globalize is based on Globalize3, but targeted at Mongoid. As Globalize3, it is compatible with and builds on the new "I18n API in Ruby on Rails":http://guides.rubyonrails.org/i18n.html and adds model translations to Mongoid::Document.
+
+Mongoid::Globalize has to work with other frameworks, that supports Mongoid (Sinatra, Padrino, and others).
+
+h2. Requirements
+
+Mongoid > 2.0.2
+
+Yes, at this moment Mongoid::Globalize doesn't support any published versions of Mongoid gem, so you need to clone master branch of this gem. I tested with "revision: e2540c818ebb1d37b3a8d1b7e6dd6836ce16d445":https://github.com/mongoid/mongoid/tree/e2540c818ebb1d37b3a8d1b7e6dd6836ce16d445, future revisions break some specs, so I wait for stable mongoid-2.1.0.
+
+I also tested against ActiveModel-3.1.0.rc4, so Mongoid::Globalize has to work with Rails 3.1.
+
+h2. Installation
+
+To install Mongoid::Globalize just use:
+
+<pre><code>
+$ gem install mongoid_globalize
+</code></pre>
+
+or, with bundler, in your Gemfile
+
+<pre><code>
+gem 'mongoid_globalize'
+</code></pre>
+
+h2. Document translations
+
+Document translations allow you to translate your document' field values. In order to make this work, you'll need to add +include Mongoid::Globalize+ into your document class and define translatable fields in block of +translates+ method, as you define usual fields. E.g.
+
+<pre><code>
+class Post
+  include Mongoid::Document
+  include Mongoid::Globalize
+  translates do
+    field :title
+    field :content
+    field :published, type: Boolean
+  end
+end
+</code></pre>
+
+This allows you to translate the fields :title, :text and :published per locale:
+
+<pre><code>
+I18n.locale = :en
+post.title # => Globalize rocks!
+
+I18n.locale = :ru
+post.title # => Глобалайз рулит!
+</code></pre>
+
+h2. I18n fallbacks for empty translations
+
+It is possible to enable fallbacks for empty translations. It will depend on the configuration setting you have set for I18n translations in your config.
+
+In Rails applications, for example, you can enable them by adding the next line to @config/application.rb@ (or only @config/environments/production.rb@ if you only want them in production)
+
+<pre><code>config.i18n.fallbacks = true</code></pre>
+
+By default, Mongoid::Globalize will only use fallbacks when your translation model does not exist or the translation value for the item you've requested is @nil@. However it is possible to also use fallbacks for @blank@ translations by adding @fallbacks_for_empty_translations!@ to the @translates@ block.
+
+<pre><code>
+  class Post
+    include Mongoid::Document
+    include Mongoid::Globalize
+    translates do
+      field :title
+      field :content
+    end
+  end
+
+  puts post.translations.inspect
+  # => [#<Post::Translation id: 1, post_id: 1, locale: "en", title: "Globalize rocks!", name: "Globalize">, #<Post::Translation id: 2, post_id: 1, locale: "nl", title: '', name: nil>]
+
+  I18n.locale = :en
+  post.title # => 'Globalize rocks!'
+  post.name  # => 'Globalize'
+
+  I18n.locale = :nl
+  post.title # => ''
+  post.name  # => 'Globalize'
+</code></pre>
+<pre><code>
+  class Post
+    include Mongoid::Document
+    include Mongoid::Globalize
+    translates do
+      field :title
+      field :content
+      fallbacks_for_empty_translations!
+    end
+  end
+
+  puts post.translations.inspect
+  # => [#<Post::Translation id: 1, post_id: 1, locale: "en", title: "Globalize rocks!", name: "Globalize">, #<Post::Translation id: 2, post_id: 1, locale: "nl", title: '', name: nil>]
+
+  I18n.locale = :en
+  post.title # => 'Globalize rocks!'
+  post.name  # => 'Globalize'
+
+  I18n.locale = :nl
+  post.title # => 'Globalize rocks!'
+  post.name  # => 'Globalize'
+</code></pre>
+
+
+h2. Scoping objects by those with translations
+
+To only return objects that have a translation for the given locale we can use the `with_translations` scope. This will only return records that have a translations for the passed in locale.
+
+<pre><code>
+
+Post.with_translations('en') # => [#<Post::Translation id: 1, post_id: 1, locale: "en", title: "Globalize rocks!", name: "Globalize">, #<Post::Translation id: 2, post_id: 1, locale: "nl", title: '', name: nil>]
+
+Post.with_translations(I18n.locale) # => [#<Post::Translation id: 1, post_id: 1, locale: "en", title: "Globalize rocks!", name: "Globalize">, #<Post::Translation id: 2, post_id: 1, locale: "nl", title: '', name: nil>]
+
+Post.with_translations('de') # => []
+
+</code></pre>
