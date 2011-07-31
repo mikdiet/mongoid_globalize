@@ -2,13 +2,11 @@ h1. Mongoid::Globalize
 
 Mongoid::Globalize is based on Globalize3, but targeted at Mongoid. As Globalize3, it is compatible with and builds on the new "I18n API in Ruby on Rails":http://guides.rubyonrails.org/i18n.html and adds model translations to Mongoid::Document.
 
-Mongoid::Globalize has to work with other frameworks, that supports Mongoid (Sinatra, Padrino, and others).
+Mongoid::Globalize has to work with Rails3 and other frameworks, that supports Mongoid (Sinatra, Padrino, and others).
 
 h2. Requirements
 
-Mongoid > 2.0.2
-
-Yes, at this moment Mongoid::Globalize doesn't support any published versions of Mongoid gem, so you need to clone master branch of this gem. I tested with "revision: e2540c818ebb1d37b3a8d1b7e6dd6836ce16d445":https://github.com/mongoid/mongoid/tree/e2540c818ebb1d37b3a8d1b7e6dd6836ce16d445, future revisions break some specs, so I wait for stable mongoid-2.1.0.
+Mongoid 2.1.0 and above
 
 I also tested against ActiveModel-3.1.0.rc4, so Mongoid::Globalize has to work with Rails 3.1.
 
