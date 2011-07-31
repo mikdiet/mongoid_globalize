@@ -94,7 +94,7 @@ describe 'Attributes' do
     it "works for translated attributes" do
       post = Post.create(:title => 'title')
       post.update_attributes(:title => "Titel", :locale => :de)
-  
+
       with_locale(:en) { post.title_before_type_cast.should == 'title' }
       with_locale(:de) { post.title_before_type_cast.should == 'Titel' }
     end
@@ -106,6 +106,7 @@ describe 'Attributes' do
     with_locale(:he) { child.content = 'baz' }
     child.save
     child.reload
+
     child.should be_translated(:en).for(:content).as('foo')
     child.should be_translated(:de).for(:content).as('bar')
     child.should be_translated(:he).for(:content).as('baz')
@@ -129,6 +130,7 @@ describe 'Attributes' do
 
   describe "modifying a translated attribute" do
     it "does not change the untranslated value" do
+      pending "TODO"
       post = Post.create(:title => 'title')
       before = post.untranslated_attributes['title']
       post.title = 'changed title'

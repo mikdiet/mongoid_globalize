@@ -7,10 +7,10 @@ module Mongoid::Globalize
     end
 
     def attributes
-      if @stop_merging_translated_attributes
+      if @stop_merging_translated_attributes# || translated_attributes_not_changed?
         super
       else
-        @attributes = super.merge translated_attributes
+        @attributes.merge! translated_attributes
         @attributes
       end
     end
@@ -26,6 +26,7 @@ module Mongoid::Globalize
         unless attributes[access] == value || attribute_changed?(access)
           attribute_will_change! access
         end
+        @translated_attributes[access] = value
         globalize.write(options[:locale] || Mongoid::Globalize.locale, name, value)
       else
         super(name, value)
@@ -57,8 +58,17 @@ module Mongoid::Globalize
       self.class.translated?(name)
     end
 
+    def translated_attributes_not_changed?
+      if @last_translated_attributes == translated_attributes
+        true
+      else
+        @last_translated_attributes = translated_attributes
+        false
+      end
+    end
+
     def translated_attributes
-      translated_attribute_names.inject({}) do |attributes, name|
+      @translated_attributes ||= translated_attribute_names.inject({}) do |attributes, name|
         attributes.merge(name.to_s => translation.send(name))
       end
     end

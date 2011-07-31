@@ -1,7 +1,7 @@
-source "http://rubygems.org"
+source 'http://rubygems.org'
 
-gem 'mongoid', :git => 'git://github.com/mongoid/mongoid.git'
-gem 'bson_ext'
+gem 'mongoid', '>= 2.1', :git => 'git://github.com/mongoid/mongoid.git', :tag => 'a9e92c264087ad6ea4ad7197e3c930757c00e8eb'
+gem 'bson_ext', '>= 1.3'
 
 group :development, :test do
   gem 'rspec'

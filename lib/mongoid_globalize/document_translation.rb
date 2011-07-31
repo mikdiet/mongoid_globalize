@@ -15,8 +15,8 @@ module Mongoid::Globalize
         all.distinct("locale").sort.map &:to_sym
       end
 
-      def find_or_initialize_by_locale(locale)
-        with_locale(locale.to_s).first || build(:locale => locale.to_s)
+      def find_by_locale(locale)
+        with_locale(locale.to_s).first
       end
     end
 
