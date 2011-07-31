@@ -7,12 +7,10 @@ module Mongoid::Globalize
     end
 
     def attributes
-      if @stop_merging_translated_attributes# || translated_attributes_not_changed?
-        super
-      else
+      unless @stop_merging_translated_attributes
         @attributes.merge! translated_attributes
-        @attributes
       end
+      super
     end
 
     def process(attributes, *args)
@@ -58,18 +56,9 @@ module Mongoid::Globalize
       self.class.translated?(name)
     end
 
-    def translated_attributes_not_changed?
-      if @last_translated_attributes == translated_attributes
-        true
-      else
-        @last_translated_attributes = translated_attributes
-        false
-      end
-    end
-
     def translated_attributes
-      @translated_attributes ||= translated_attribute_names.inject({}) do |attributes, name|
-        attributes.merge(name.to_s => translation.send(name))
+      @translated_attributes ||= translated_attribute_names.inject({}) do |attrs, name|
+        attrs.merge(name.to_s => translation.send(name))
       end
     end
 
@@ -112,11 +101,15 @@ module Mongoid::Globalize
 
     def translation_for(locale)
       @translation_caches ||= {}
+      # Need to temporary switch of merging, because #translations uses
+      # #attributes method too, to avoid stack level too deep error.
+      @stop_merging_translated_attributes = true
       unless @translation_caches[locale]
-        _translation = translations.detect{|t| t.locale.to_s == locale.to_s}
+        _translation = translations.find_by_locale(locale)
         _translation ||= translations.build(:locale => locale)
         @translation_caches[locale] = _translation
       end
+      @stop_merging_translated_attributes = false
       @translation_caches[locale]
     end
 

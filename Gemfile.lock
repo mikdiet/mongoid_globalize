@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: a9e92c264087ad6ea4ad7197e3c930757c00e8eb
-  ref: a9e92c264087ad6ea4ad7197e3c930757c00e8eb
+  revision: 93b568c6d47efd76bcf817dc416385a98037a335
+  tag: 2.1.2
   specs:
-    mongoid (2.1.0)
+    mongoid (2.1.2)
       activemodel (~> 3.0)
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)

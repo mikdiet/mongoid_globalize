@@ -32,7 +32,7 @@ module Mongoid::Globalize
     def prepare_translations!
       stash.each do |locale, attrs|
         translation = record.translations.find_by_locale(locale)
-        translation ||= record.translations.build(:locale => locale.to_s)
+        translation ||= record.translations.build(:locale => locale)
         attrs.each{ |name, value| translation[name] = value }
       end
       reset
