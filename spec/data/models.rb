@@ -5,8 +5,8 @@ class Post
   translates do
     field :title
     field :content
-    field :published, type: Boolean
-    field :published_at, type: DateTime
+    field :published, :type => Boolean
+    field :published_at, :type => DateTime
   end
   validates_presence_of :title
   scope :with_some_title, :conditions => { :title => 'some_title' }
@@ -17,8 +17,8 @@ class PostTranslation
   field :locale
   field :title
   field :content
-  field :published, type: Boolean
-  field :published_at, type: DateTime
+  field :published, :type => Boolean
+  field :published_at, :type => DateTime
   embedded_in :post
 
   def existing_method

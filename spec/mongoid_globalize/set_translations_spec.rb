@@ -10,10 +10,8 @@ describe "#set_translations" do
       :de => { :title => 'geänderter Titel', :content => 'geänderter Inhalt' }
     )
     post.reload
-    post.should be_translated(:en).for([:title, :content])
-                .as(['updated title', 'updated content'])
-    post.should be_translated(:de).for([:title, :content])
-                .as(['geänderter Titel', 'geänderter Inhalt'])
+    post.should be_translated(:en).for([:title, :content]).as(['updated title', 'updated content'])
+    post.should be_translated(:de).for([:title, :content]).as(['geänderter Titel', 'geänderter Inhalt'])
   end
 
   it "does not touch existing translations for other locales" do
@@ -21,8 +19,7 @@ describe "#set_translations" do
     post.update_attributes(:title => 'Titel', :content => 'Inhalt', :locale => :de)
     post.set_translations(:en => { :title => 'updated title', :content => 'updated content' })
     post.reload
-    post.should be_translated(:en).for([:title, :content])
-                .as(['updated title', 'updated content'])
+    post.should be_translated(:en).for([:title, :content]).as(['updated title', 'updated content'])
     post.should be_translated(:de).for([:title, :content]).as(['Titel', 'Inhalt'])
   end
 
