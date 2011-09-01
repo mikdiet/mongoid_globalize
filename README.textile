@@ -1,4 +1,4 @@
-h1. Mongoid::Globalize
+h1. "!https://secure.travis-ci.org/Mik-die/mongoid_globalize.png!":http://travis-ci.org/Mik-die/mongoid_globalize Mongoid::Globalize
 
 Mongoid::Globalize is based on Globalize3, but targeted at Mongoid. As Globalize3, it is compatible with and builds on the new "I18n API in Ruby on Rails":http://guides.rubyonrails.org/i18n.html and adds model translations to Mongoid::Document.
 
