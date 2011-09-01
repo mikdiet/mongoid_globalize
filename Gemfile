@@ -5,6 +5,7 @@ gem 'mongoid', '>= 2.1', :git => 'git://github.com/mongoid/mongoid.git', :tag =>
 gem 'bson_ext', '>= 1.3'
 
 group :development, :test do
+  gem 'rdoc'
   gem 'rspec'
   gem 'mongoid-rspec'
   gem 'database_cleaner'
