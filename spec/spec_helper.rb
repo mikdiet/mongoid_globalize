@@ -5,7 +5,9 @@ require 'mongoid'
 Mongoid.configure do |config|
   name = "mongoid_globalize_test"
   config.autocreate_indexes = true
-  config.master = Mongo::Connection.new.db(name)
+  db = Mongo::Connection.new.db(name)
+  db.add_user("mongoid", "test")
+  config.master = db
   config.logger = Logger.new($stdout, :warn)
 end
 

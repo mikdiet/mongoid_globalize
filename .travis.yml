@@ -1,11 +1,9 @@
 rvm:
+  - 1.8.7
+  - 1.9.2
+  - 1.9.3
   - ruby-head
   - jruby
   - rbx
-  - 1.9.3
-  - 1.8.7
-  - 1.9.2
+  - rbx-2.0
   - ree
-  - rbx-2.0.0pre
-before_script:
-  - mongo mongoid_globalize_test --eval 'db.addUser("vagrant", "");'
