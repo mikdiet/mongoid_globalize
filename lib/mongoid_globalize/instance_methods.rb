@@ -43,7 +43,9 @@ module Mongoid::Globalize
           attribute_will_change! access
         end
         @translated_attributes[access] = value
-        globalize.write(options[:locale] || Mongoid::Globalize.locale, name, value)
+        the_locale = options[:locale] || Mongoid::Globalize.locale
+        self.translations.reject!{ |t| t.new_record? && t.locale != the_locale }
+        globalize.write(the_locale, name, value)
       else
         super(name, value)
       end
@@ -70,7 +72,7 @@ module Mongoid::Globalize
 
     # Mongoid documents haven't attribute_names method, so I replace +super+
     # with +@attributes.keys.sort+. So this method returns only translated and
-    # existing attribute names (but not all available names as in AR or G3) 
+    # existing attribute names (but not all available names as in AR or G3)
     def attribute_names
       translated_attribute_names.map(&:to_s) + @attributes.keys.sort
     end
@@ -183,7 +185,7 @@ module Mongoid::Globalize
       end
       globalize.prepare_translations!
     end
-    
+
     # After save callback. Reset some values.
     def clear_translations!
       @translation_caches = {}

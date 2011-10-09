@@ -17,7 +17,7 @@ describe "Fallbacks" do
     I18n.backend = @previous_backend
   end
 
-  it "keep one field in new locale when other field is changed" do
+  it "keeps one field in new locale when other field is changed" do
     I18n.fallbacks.map('de-DE' => [ 'en-US' ])
     post = Post.create :title => 'foo'
     I18n.locale = 'de-DE'
@@ -25,7 +25,7 @@ describe "Fallbacks" do
     post.title.should == 'foo'
   end
 
-  it "modify non-required field in a new locale" do
+  it "modifies non-required field in a new locale" do
     I18n.fallbacks.map 'de-DE' => [ 'en-US' ]
     post = Post.create :title => 'foo'
     I18n.locale = 'de-DE'
@@ -33,7 +33,7 @@ describe "Fallbacks" do
     post.save.should be_true
   end
 
-  it "resolve a simple fallback" do
+  it "resolves a simple fallback" do
     I18n.locale = 'de-DE'
     post = Post.create :title => 'foo'
 
@@ -47,7 +47,7 @@ describe "Fallbacks" do
     post.content.should == 'bar'
   end
 
-  it "resolve a simple fallback without reloading" do
+  it "resolves a simple fallback without reloading" do
     I18n.locale = 'de-DE'
     post = Post.new :title => 'foo'
 
@@ -60,7 +60,7 @@ describe "Fallbacks" do
     post.content.should == 'bar'
   end
 
-  it "resolve a complex fallback without reloading" do
+  it "resolves a complex fallback without reloading" do
     I18n.fallbacks.map 'de' => %w(en he)
     I18n.locale = 'de'
     post = Post.new
@@ -74,7 +74,7 @@ describe "Fallbacks" do
     post.content.should == 'bar'
   end
 
-  it 'work with lots of locale switching' do
+  it 'works with lots of locale switching' do
     I18n.fallbacks.map :'de-DE' => [ :'en-US' ]
     post = Post.create :title => 'foo'
     I18n.locale = :'de-DE'
@@ -86,7 +86,7 @@ describe "Fallbacks" do
     post.title.should == 'bar'
   end
 
-  it 'work with lots of locale switching 2' do
+  it 'works with lots of locale switching 2' do
     I18n.fallbacks.map :'de-DE' => [ :'en-US' ]
     child = Child.create :content => 'foo'
     I18n.locale = :'de-DE'
@@ -98,7 +98,7 @@ describe "Fallbacks" do
     child.content.should == 'bar'
   end
 
-  it 'work with nil translations' do
+  it 'works with nil translations' do
     I18n.fallbacks.map :'de-DE' => [ :'en-US' ]
     post = Post.create :title => 'foo'
     I18n.locale = :'de-DE'
@@ -108,7 +108,7 @@ describe "Fallbacks" do
     post.title.should == 'foo'
   end
 
-  it 'work with empty translations' do
+  it 'works with empty translations' do
     I18n.fallbacks.map :'de-DE' => [ :'en-US' ]
     task = Task.create :name => 'foo'
     I18n.locale = :'de-DE'
@@ -118,7 +118,7 @@ describe "Fallbacks" do
     task.name.should == 'foo'
   end
 
-  it 'work with empty translations 2' do
+  it 'works with empty translations 2' do
     I18n.fallbacks.map :'de-DE' => [ :'en-US' ]
     task = Task.create :name => 'foo'
     post = Post.create :title => 'foo'
@@ -131,5 +131,16 @@ describe "Fallbacks" do
 
     post.update_attribute :title, ''
     post.title.should == ''
+  end
+
+  it "creates just one translation when fallbacks set" do
+    I18n.fallbacks.clear
+    I18n.fallbacks.map :de => [:fr]
+    I18n.locale = :de
+    task = Task.create :name => 'foo'
+    task.translations.should be_any(&:persisted?)
+
+    task.save
+    task.translations.map(&:locale).sort.should == [:de]
   end
 end
