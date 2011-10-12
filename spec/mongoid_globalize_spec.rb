@@ -40,7 +40,7 @@ describe Mongoid::Globalize do
       post = Post.create(:title => 'title')
       post.attributes = { :title => 'Titel', :locale => :de }
       post.save
-      post.reload  
+      post.reload
       post.translations.size.should == 2
       post.should be_translated(:de).for(:title).as('Titel')
       post.should be_translated(:en).for(:title).as('title')
@@ -51,7 +51,7 @@ describe Mongoid::Globalize do
     it "works" do
       blog = Blog.create
       blog.posts.create(:title => 'title')
-      blog.posts.create(:title => 'Titel', :locale => :de)  
+      blog.posts.create(:title => 'Titel', :locale => :de)
       blog.posts.size.should == 2
       blog.posts.first.should be_translated(:en).for(:title).as('title')
       blog.posts.last.should be_translated(:de).for(:title).as('Titel')
@@ -176,6 +176,15 @@ describe Mongoid::Globalize do
                                            :locale => :de).should be_true
       translated_comment.should be_translated(:en).for(:content).as('content')
       translated_comment.should be_translated(:de).for(:content).as('Inhalt')
+    end
+  end
+
+  describe "#delete" do
+    it "works" do
+      task = Task.create(:title => 'title')
+      task.reload
+      task.delete.should be_true
+      Task.count.should be_zero
     end
   end
 end

@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 3c702e6d92bb99782bf7b8a35f1e0da3bacddc93
-  tag: v2.3.0
+  revision: 6bb80634cfbbde3b794b9d2dcd4b9950945fcd6b
+  tag: v2.3.1
   specs:
-    mongoid (2.3.0)
+    mongoid (2.3.1)
       activemodel (~> 3.1)
       mongo (~> 1.4)
       tzinfo (~> 0.3.22)
@@ -11,15 +11,13 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.1.0)
-      activesupport (= 3.1.0)
-      bcrypt-ruby (~> 3.0.0)
+    activemodel (3.1.1)
+      activesupport (= 3.1.1)
       builder (~> 3.0.0)
       i18n (~> 0.6)
-    activesupport (3.1.0)
+    activesupport (3.1.1)
       multi_json (~> 1.0)
     archive-tar-minitar (0.5.2)
-    bcrypt-ruby (3.0.1)
     bson (1.4.0)
     bson_ext (1.4.0)
     builder (3.0.0)
