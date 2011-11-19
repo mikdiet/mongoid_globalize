@@ -14,7 +14,7 @@ module Mongoid::Globalize
     # @attributes.
     # Return: Hash
     def attributes
-      unless @stop_merging_translated_attributes
+      unless @stop_merging_translated_attributes || @attributes.frozen?
         @attributes.merge! translated_attributes
       end
       super
