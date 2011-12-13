@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "mongoid_globalize"
-  s.version = "0.1.3"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mik-die"]
-  s.date = "2011-10-09"
+  s.date = "2011-12-13"
   s.description = "Library for translating Mongoid documents, based on Globalize3 principles"
   s.email = "MikDiet@gmail.com"
   s.extra_rdoc_files = [
