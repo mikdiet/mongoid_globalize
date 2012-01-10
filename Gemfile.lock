@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: d8aa8a7730d8c352ecf5027a57764ebf92c0f363
-  tag: v2.3.4
+  revision: d4ae10be8e972e3a52371ed35692cde504190675
+  tag: v2.4.0
   specs:
-    mongoid (2.3.4)
+    mongoid (2.4.0)
       activemodel (~> 3.1)
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)
@@ -18,8 +18,9 @@ GEM
     activesupport (3.1.3)
       multi_json (~> 1.0)
     archive-tar-minitar (0.5.2)
-    bson (1.5.1)
-    bson_ext (1.4.0)
+    bson (1.5.2)
+    bson_ext (1.5.2)
+      bson (= 1.5.2)
     builder (3.0.0)
     columnize (0.3.4)
     database_cleaner (0.6.7)
@@ -32,8 +33,8 @@ GEM
       rake
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
-    mongo (1.5.1)
-      bson (= 1.5.1)
+    mongo (1.5.2)
+      bson (= 1.5.2)
     mongoid-rspec (1.4.4)
       mongoid (~> 2.0)
       rspec (~> 2)
@@ -67,7 +68,7 @@ DEPENDENCIES
   bson_ext (>= 1.3)
   database_cleaner
   jeweler
-  mongoid (>= 2.1)!
+  mongoid (~> 2.3)!
   mongoid-rspec
   rdoc
   rspec
