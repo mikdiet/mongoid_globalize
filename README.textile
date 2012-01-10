@@ -6,7 +6,7 @@ Mongoid::Globalize has to work with Rails3+ and other frameworks, that supports 
 
 h2. Requirements
 
-Mongoid 2.3. Mongoid 2.4 break some specs, so it's not supported yet. Though you can use +gem 'mongoid_globalize', '1.3.4'+, it's the same as last version, but allows using any 2.1<plus> version of Mongoid.
+Mongoid 2.3. Mongoid 2.4 break some specs, so it's not supported yet.
 
 h2. Installation
 
