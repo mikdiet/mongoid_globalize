@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "mongoid_globalize"
-  s.version = "0.1.5"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mik-die"]
-  s.date = "2012-01-10"
+  s.date = "2012-01-16"
   s.description = "Library for translating Mongoid documents, based on Globalize3 principles"
   s.email = "MikDiet@gmail.com"
   s.extra_rdoc_files = [
@@ -56,8 +56,8 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<mongoid>, ["~> 2.3"])
-      s.add_runtime_dependency(%q<bson_ext>, [">= 1.3"])
+      s.add_runtime_dependency(%q<mongoid>, ["~> 2.4"])
+      s.add_runtime_dependency(%q<bson_ext>, ["~> 1.5"])
       s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<mongoid-rspec>, [">= 0"])
@@ -65,8 +65,8 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
     else
-      s.add_dependency(%q<mongoid>, ["~> 2.3"])
-      s.add_dependency(%q<bson_ext>, [">= 1.3"])
+      s.add_dependency(%q<mongoid>, ["~> 2.4"])
+      s.add_dependency(%q<bson_ext>, ["~> 1.5"])
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<mongoid-rspec>, [">= 0"])
@@ -75,8 +75,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<jeweler>, [">= 0"])
     end
   else
-    s.add_dependency(%q<mongoid>, ["~> 2.3"])
-    s.add_dependency(%q<bson_ext>, [">= 1.3"])
+    s.add_dependency(%q<mongoid>, ["~> 2.4"])
+    s.add_dependency(%q<bson_ext>, ["~> 1.5"])
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<mongoid-rspec>, [">= 0"])
