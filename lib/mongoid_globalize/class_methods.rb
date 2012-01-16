@@ -45,7 +45,7 @@ module Mongoid::Globalize
 
     # Return Array of attribute names with presence validations
     def required_attributes
-      validators.map{ |v| v.attributes if v.is_a?(ActiveModel::Validations::PresenceValidator) }.flatten.compact
+      validators.map{ |v| v.attributes if v.is_a?(Mongoid::Validations::PresenceValidator) }.flatten.compact
     end
 
     # Return Array of translated attribute names with presence validations

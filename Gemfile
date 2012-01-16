@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'mongoid', '>= 2.3', :git => 'git://github.com/mongoid/mongoid.git', :tag => 'v2.4.0'
-gem 'bson_ext', '>= 1.3'
+gem 'mongoid', '~> 2.4', :git => 'git://github.com/mongoid/mongoid.git', :tag => 'v2.4.1'
+gem 'bson_ext', '~> 1.5'
 
 group :development, :test do
   gem 'rdoc'
