@@ -94,7 +94,7 @@ describe 'Attributes' do
     it "works for translated attributes" do
       post = Post.create(:title => 'title')
       post.update_attributes(:title => "Titel", :locale => :de)
-  
+
       with_locale(:en) { post.title_before_type_cast.should == 'title' }
       with_locale(:de) { post.title_before_type_cast.should == 'Titel' }
     end

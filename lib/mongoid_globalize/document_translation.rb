@@ -4,7 +4,7 @@ module Mongoid::Globalize
   class DocumentTranslation
     include Mongoid::Document
 
-    field :locale
+    field :locale, :type => String
 
     class << self
       # Accessor to document class which translated
@@ -22,7 +22,7 @@ module Mongoid::Globalize
       # Returns all locales used for translation.
       # Return Array of Symbols
       def translated_locales
-        all.distinct("locale").sort{ |x,y| x.to_s <=> y.to_s }.map &:to_sym
+        all.distinct("locale").sort{ |x,y| x.to_s <=> y.to_s }.map(&:to_sym)
       end
 
       # Returns translation document for given locale

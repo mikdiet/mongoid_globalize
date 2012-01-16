@@ -44,7 +44,7 @@ module Mongoid::Globalize
         end
         @translated_attributes[access] = value
         the_locale = options[:locale] || Mongoid::Globalize.locale
-        self.translations.reject!{ |t| t.new_record? && t.locale != the_locale }
+        self.translations.reject!{ |t| t.new_record? && t.locale != the_locale } if self.class.fallbacks_for_empty_translations
         globalize.write(the_locale, name, value)
       else
         super(name, value)
@@ -181,7 +181,7 @@ module Mongoid::Globalize
       @stop_merging_translated_attributes = true
       translated_attribute_names.each do |name|
         @attributes.delete name.to_s
-        @changed_attributes.delete name.to_s
+        @changed_attributes.delete name.to_s if @changed_attributes
       end
       globalize.prepare_translations!
     end
