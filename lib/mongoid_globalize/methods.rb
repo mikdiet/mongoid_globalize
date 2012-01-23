@@ -1,5 +1,5 @@
 module Mongoid::Globalize
-  module InstanceMethods
+  module Methods
     delegate :translated_locales, :to => :translations
 
     # Reader for adapter, where translations stashing during lifecicle. At first

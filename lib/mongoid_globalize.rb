@@ -4,14 +4,15 @@ require 'mongoid_globalize/attributes'
 require 'mongoid_globalize/class_methods'
 require 'mongoid_globalize/document_translation'
 require 'mongoid_globalize/fields_builder'
-require 'mongoid_globalize/instance_methods'
+require 'mongoid_globalize/methods'
 
 module Mongoid::Globalize
 
+  include Mongoid::Globalize::Methods
+
   # When Mongoid::Globalize included into Mongoid document class, for this class
   # code inside +included+ block will be executed, methods from
-  # Mongoid::Globalize::ClassMethods module become class methods, and methods
-  # from Mongoid::Globalize::InstanceMethods become instance methods, due to
+  # Mongoid::Globalize::ClassMethods module become class methods due to
   # ActiveSupport::Concern mechanism.
   extend ActiveSupport::Concern
 
