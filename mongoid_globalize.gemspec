@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mik-die"]
-  s.date = "2012-01-16"
+  s.date = "2012-02-23"
   s.description = "Library for translating Mongoid documents, based on Globalize3 principles"
   s.email = "MikDiet@gmail.com"
   s.extra_rdoc_files = [
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
     "lib/mongoid_globalize/class_methods.rb",
     "lib/mongoid_globalize/document_translation.rb",
     "lib/mongoid_globalize/fields_builder.rb",
-    "lib/mongoid_globalize/instance_methods.rb",
+    "lib/mongoid_globalize/methods.rb",
     "mongoid_globalize.gemspec",
     "spec/data/models.rb",
     "spec/mongoid_globalize/attributes_spec.rb",
